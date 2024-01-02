@@ -1,0 +1,31 @@
+{% extends 'newsletter/base.html' %}
+
+{% block content %}
+
+<div class="container">
+    <div class="card col-8">
+        <div class="card-body">
+
+            <h5 class="card-title">email: {{ client.email }}</h5>
+            <p class="card-text mb-3">Имя: {{ client.surname|title }}</p>
+            <p class="card-text mb-3">Фамилия: {{ client.first_name|title }}</p>
+            <p class="card-text mb-3">Отчество: {{ client.patronymic_name|title }}</p>
+            <p class="card-text mb-3">comment:
+                {% if client.comment %}
+                {{ client.comment }}
+                {% else %}
+                None
+                {% endif %}
+            </p>
+        </div>
+        <div class="card-footer">
+            {% if request.user.is_staff %}
+                <p class="card-text mb-3">owner: {{ client.owner }}</p>
+            {% endif %}
+                <a type="button" href="{% url 'clients:client_list'%}"
+               class="btn btn-lg btn-block btn-outline-primary">Назад</a>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

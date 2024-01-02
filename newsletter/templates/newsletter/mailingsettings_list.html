@@ -1,0 +1,107 @@
+{% extends 'newsletter/base.html' %}
+
+{% load mediapath%}
+
+{% block content %}
+
+{% if not user|has_group:"Manager" %}
+<div class="text-center container">
+    <a class="btn btn-primary" href="{% url 'newsletter:mailing_settings_create' %}" type="button">Добавить рассылку</a>
+</div>
+{% endif %}
+
+<div class="container col-8 mt-2 mb-5">
+    <div class="card">
+        <div class="card-header text-center">
+            <h1>Статистика</h1>
+        </div>
+        <div class="card-body">
+            <div class="row text-center ">
+                <div class="col-12">
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th><h4>Количество рассылок</h4></th>
+                            <th><h4>Количество активных рассылок</h4></th>
+                            <th><h4>Количество завершенных рассылок</h4></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td><h4>{{ all }}</h4></td>
+                            <td><h4>{{ active }}</h4></td>
+                            <td><h4>{{ completed }}</h4></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container text-center">
+    <table class="table">
+        <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">created_at</th>
+            <th scope="col">start_time</th>
+            <th scope="col">end_time</th>
+            <th scope="col">periodicity</th>
+            <th scope="col">status</th>
+            <th scope="col">is_active</th>
+            {% if request.user.is_staff %}
+            <th scope="col">owner</th>
+            {% endif %}
+            <th scope="col">actions</th>
+        </tr>
+        </thead>
+        <tbody>
+
+        {% for newsletter in object_list %}
+
+        <tr>
+            <th scope="row">{{ forloop.counter }}</th>
+            <td>{{ newsletter.created_at }}</td>
+            <td>{{ newsletter.start_time }}</td>
+            <td>{{ newsletter.end_time }}</td>
+            <td>{{ newsletter.periodicity }}</td>
+            <td>{{ newsletter.status }}</td>
+            {% if request.user.is_staff %}
+            {% if newsletter.is_active %}
+            <td>
+                <a href="{% url 'newsletter:toggle_active' newsletter.pk %}" type="button"
+                   class="btn btn-success">True</a>
+            </td>
+            {% else %}
+            <td>
+                <a href="{% url 'newsletter:toggle_active' newsletter.pk %}" type="button"
+                   class="btn btn-danger">False</a>
+            </td>
+            {% endif %}
+            <td>{{ newsletter.owner }}</td>
+            {% else %}
+            <td>{{ newsletter.is_active }}</td>
+            {% endif %}
+            <td>
+                <div class="btn-group" role="group" aria-label="Basic outlined example">
+                    <a href="{% url 'newsletter:mailing_settings_detail' newsletter.pk %}" type="button"
+                       class="btn btn-sm btn-outline-secondary">Подробнее</a>
+                    {% if not user|has_group:"Manager" %}
+                    <a href="{% url 'newsletter:mailing_settings_update' newsletter.pk %}" type="button"
+                       class="btn btn-sm btn-outline-secondary">Изменить</a>
+                    <a href="{% url 'newsletter:mailing_settings_delete' newsletter.pk %}" type="button"
+                       class="btn btn-sm btn btn-danger">Удалить</a>
+                    {% endif %}
+                </div>
+            </td>
+        </tr>
+
+        {% endfor %}
+
+        </tbody>
+    </table>
+</div>
+
+{% endblock %}

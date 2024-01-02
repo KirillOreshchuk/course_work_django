@@ -1,0 +1,28 @@
+{% extends 'newsletter/base.html' %}
+
+{% load mediapath %}
+
+{% block content %}
+
+<div class="container">
+    <div class="col-12">
+        <div class="card h-100">
+            <img src="{% mediapath post.image %}" class="card-img-top" alt="...">
+            <div class="card-body">
+                <h5 class="card-title mb-3">{{ object.title|title }}</h5>
+                <h6 class="card-subtitle mb-3 text-body-secondary">{{ object.slug }}</h6>
+                <p class="card-text">{{ object.description }}</p>
+                <p class="card-text">Автор: {{ object.owner }}</p>
+                <a href="{% url 'blog:blog_list' %}" type="button" class="btn btn-sm btn-outline-secondary mb-3">
+                    Публикации
+                </a>
+            </div>
+            <div class="card-footer">
+                <small class="text-body-secondary ms-5">Создана: {{ object.created_at }}</small>
+                <small class="text-body-secondary ms-5">Количество просмотров: {{ object.views_count }}</small>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

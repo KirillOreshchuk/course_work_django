@@ -1,0 +1,22 @@
+{% extends 'newsletter/base.html' %}
+
+{% block content %}
+
+<div class="container">
+    <div class="card col-8">
+        <div class="card-body">
+            <p class="card-title">title: {{ message.title }}</p>
+            <p class="card-title">text: {{ message.text }}</p>
+        </div>
+        <div class="card-footer">
+
+            {% if request.user.is_staff %}
+            <p class="card-text mb-3">owner: {{ message.owner }}</p>
+            {% endif %}
+            <a type="button" href="{% url 'newsletter:message_list'%}"
+               class="btn btn-lg btn-block btn-outline-primary">Назад</a>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

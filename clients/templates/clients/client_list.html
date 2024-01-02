@@ -1,0 +1,52 @@
+{% extends 'newsletter/base.html' %}
+
+{% load mediapath %}
+
+{% block content %}
+
+{% if not user|has_group:"Manager" %}
+<div class="text-center container">
+    <a class="btn btn-primary mb-3" href="{% url 'clients:client_create' %}" type="button">Добавить клиента</a>
+</div>
+{% endif %}
+
+<div class="container text-center">
+    <table class="table">
+
+        <tbody>
+
+        {% for object in object_list %}
+        <div class="col mb-3">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <p class="card-text">{{ object }}</p>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div class="btn-group">
+                            <div class="card-body">
+                                <a type="button" class="btn btn-sm btn-outline-secondary"
+                                   href="{% url 'clients:client_detail' object.pk %}">
+                                    Подробнее
+                                </a>
+                                <a type="button" class="btn btn-sm btn-outline-secondary"
+                                   href="{% url 'clients:client_update' object.pk %}">
+                                    Изменить
+                                </a>
+                                <a type="button" class="btn btn-sm btn-outline-secondary"
+                                   href="{% url 'clients:client_delete' object.pk %}">
+                                    Удалить
+                                </a>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        {% endfor %}
+
+          </tbody>
+    </table>
+</div>
+
+{% endblock %}
