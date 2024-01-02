@@ -1,0 +1,26 @@
+{% extends 'newsletter/base.html' %}
+
+{% block content %}
+
+<div class="container">
+    <div class="card col-8">
+        <div class="card-body">
+            <h5 class="card-title">Хотите удалить сообщение?</h5>
+            <h5 class="card-title">title: {{ message.title }}</h5>
+            <p class="card-title">text: {{ message.text }}</p>
+            {% if request.user.is_staff %}
+            <p class="card-text mb-3">owner: {{ message.owner }}</p>
+            {% endif %}
+
+        </div>
+        <div class="card-footer">
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-danger">Удалить</button>
+                <a type="button" href="{% url 'newsletter:message_list'%}" class="btn btn_waring">Отмена</a>
+            </form>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

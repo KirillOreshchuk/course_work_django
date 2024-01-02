@@ -1,0 +1,82 @@
+{% extends 'newsletter/base.html' %}
+
+{% load mediapath %}
+
+{% block content %}
+
+<div class="container col-8 mt-2 mb-5">
+    <div class="card">
+        <div class="card-header text-center">
+            <h1>Логи</h1>
+        </div>
+        <div class="card-body">
+            <div class="row text-center ">
+                <div class="col-12">
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th><h4>Количество отправленных писем</h4></th>
+                            <th><h4>Отправленно успешно</h4></th>
+                            <th><h4>Количество ошибок</h4></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td><h4>{{ all }}</h4></td>
+                            <td><h4>{{ success }}</h4></td>
+                            <td><h4>{{ error }}</h4></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container text-center">
+    <table class="table">
+        <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Дата попытки</th>
+            <th scope="col">Статус</th>
+            <th scope="col">Ответ сервиса</th>
+            {% if user.is_staff %}
+            <th scope="col">owner</th>
+            {% endif %}
+            <th scope="col">Действия</th>
+        </tr>
+        </thead>
+        <tbody>
+
+        {% for log in object_list %}
+        <tr>
+            <th scope="row">{{ forloop.counter }}</th>
+            <td>{{ log.time }}</td>
+            <td>{{ log.status }}</td>
+            <td>{{ log.server_response }}</td>
+            {% if user.is_staff %}
+            <td>{{ log.owner }}</td>
+            {% endif %}
+
+            <td>
+                <div class="btn-group" role="group" aria-label="Basic outlined example">
+                    <a href="{% url 'newsletter:log_detail' log.pk %}" type="button"
+                       class="btn btn-sm btn-outline-secondary">Детали</a>
+                    <a href="{% url 'newsletter:mailing_settings_detail' log.mailing.pk %}" type="button"
+                       class="btn btn-sm btn-outline-secondary">Перейти к рассылке</a>
+                    {% if not user|has_group:"Manager" %}
+                    <a href="{% url 'newsletter:log_delete' log.pk %}" type="button"
+                       class="btn btn-sm btn btn-danger">Удалить</a>
+                    {% endif %}
+                </div>
+            </td>
+        </tr>
+        {% endfor %}
+
+        </tbody>
+    </table>
+</div>
+
+{% endblock %}

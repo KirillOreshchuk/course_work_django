@@ -1,0 +1,44 @@
+[
+  {
+    "model": "users.user",
+    "pk": 1,
+    "fields": {
+      "password": "pbkdf2_sha256$600000$kzBknmRhHXOnkIbY0Zo1ir$GfPp9qHhwvSGPTZZt6ZWySQiToj7lFXWsvo9WhjE2wE=",
+      "last_login": "2024-01-02T11:23:21.865Z",
+      "is_superuser": true,
+      "first_name": "Admin",
+      "last_name": "Adminov",
+      "is_staff": true,
+      "is_active": true,
+      "date_joined": "2023-12-31T09:46:33.648Z",
+      "email": "admin@admin.com",
+      "phone": null,
+      "avatar": "",
+      "country": null,
+      "groups": [],
+      "user_permissions": []
+    }
+  },
+  {
+    "model": "users.user",
+    "pk": 3,
+    "fields": {
+      "password": "pbkdf2_sha256$600000$6GWgX4m7Nk8DLZ4deo29RP$bDzIPXbzp+Xm6pnO1Mi7ZNZd0cSdUnHDZWTOr8ghx1Q=",
+      "last_login": "2024-01-02T11:20:07.698Z",
+      "is_superuser": false,
+      "first_name": "Кирилл",
+      "last_name": "Орещук",
+      "is_staff": false,
+      "is_active": true,
+      "date_joined": "2024-01-01T12:23:05Z",
+      "email": "kirill.oreshchuk@mail.ru",
+      "phone": null,
+      "avatar": "",
+      "country": "Россия",
+      "groups": [
+        1
+      ],
+      "user_permissions": []
+    }
+  }
+]

@@ -1,0 +1,56 @@
+{% extends 'newsletter/base.html' %}
+
+{% load mediapath %}
+
+{% block content %}
+
+<div class="container col-8 mt-2 mb-5">
+    <div class="card">
+        <div class="card-header text-center">
+            <h1>Статистика</h1>
+        </div>
+        <div class="card-body">
+            <div class="row text-center ">
+                <div class="col-12">
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th><h4>Всего рассылок</h4></th>
+                            <th><h4>Активных рассылок</h4></th>
+                            <th><h4>Уникальных клиентов</h4></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td><h4>{{ mailing_count }}</h4></td>
+                            <td><h4>{{ enabled_mailing }}</h4></td>
+                            <td><h4>{{ unique_clients }}</h4></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <div class="row row-cols-1 row-cols-md-3 g-4">
+        {% for post in three_random_posts %}
+
+        <div class="col">
+            <div class="card h-100">
+                <img src="{% mediapath post.image %}" class="card-img-top" alt="...">
+                <div class="card-body">
+                    <h5 class="card-title">{{ post.title|title }}</h5>
+                    <p class="card-text">{{ post.description|truncatechars:64 }}</p>
+                </div>
+                <div class="card-footer">
+                    <a href="{% url 'blog:blog_detail' post.pk %}" class="btn btn-primary">Подробнее</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

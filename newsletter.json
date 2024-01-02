@@ -1,0 +1,56 @@
+[
+  {
+    "model": "newsletter.message",
+    "pk": 1,
+    "fields": {
+      "title": "Message1",
+      "text": "Hello, my friend!",
+      "owner": null
+    }
+  },
+  {
+    "model": "newsletter.message",
+    "pk": 3,
+    "fields": {
+      "title": "Message 2",
+      "text": "Hello Hello!",
+      "owner": null
+    }
+  },
+  {
+    "model": "newsletter.message",
+    "pk": 4,
+    "fields": {
+      "title": "Message 3",
+      "text": "Hello, world!",
+      "owner": null
+    }
+  },
+  {
+    "model": "newsletter.message",
+    "pk": 5,
+    "fields": {
+      "title": "Сообщение1",
+      "text": "Привет",
+      "owner": 3
+    }
+  },
+  {
+    "model": "newsletter.mailingsettings",
+    "pk": 12,
+    "fields": {
+      "start_time": "2024-01-02T10:15:00Z",
+      "end_time": "2024-01-05T10:50:00Z",
+      "next_newsletter": "2024-01-02T10:50:00Z",
+      "periodicity": "Раз в день",
+      "status": "Запущена",
+      "created_at": "2024-01-02T10:09:20.311Z",
+      "message": 5,
+      "is_active": true,
+      "owner": 3,
+      "clients": [
+        3
+      ]
+    }
+  }
+]

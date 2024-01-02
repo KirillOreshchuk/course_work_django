@@ -1,0 +1,58 @@
+{% load static %}
+
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Сервис рассылки сообщений</title>
+    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+</head>
+
+<body>
+<div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom box-shadow">
+    <h5 class="my-0 mr-md-auto font-weight-normal">Cервис рассылки сообщений</h5>
+    <nav class="ms-5">
+
+        {% if user.is_authenticated %}
+            <a class="p-2 btn btn-outline-primary" href="{% url 'newsletter:main_page' %}">Главная страница</a>
+
+            <a class="p-2 btn btn-outline-primary" href="{% url 'newsletter:mailing_settings_list' %}">Рассылки</a>
+            <a class="p-2 btn btn-outline-primary" href="{% url 'newsletter:message_list' %}">Сообщения</a>
+            <a class="p-2 btn btn-outline-primary" href="{% url 'clients:client_list' %}">Клиенты</a>
+            <a class="p-2 btn btn-outline-primary" href="{% url 'newsletter:log_list' %}">Логи</a>
+
+            <a class="p-2 btn btn-outline-primary" href="{% url 'blog:blog_list' %}">Публикации</a>
+
+            <a class="p-2 btn btn-outline-primary" href="{% url 'users:profile' %}">Профиль</a>
+            <a class="p-2 btn btn-outline-primary" href="{% url 'users:logout' %}">Выйти</a>
+
+        {% else %}
+            <a class="p-2 btn btn-outline-primary" href="{% url 'blog:blog_list' %}">Публикации</a>
+
+            <a class="p-2 btn btn-outline-primary" href="{% url 'users:login' %}">Войти</a>
+            <a class="p-2 btn btn-outline-primary" href="{% url 'users:register' %}">Регистрация</a>
+        {% endif %}
+        {% if user.is_staff %}
+            <a class="p-2 btn btn-outline-primary" href="{% url 'users:user_list' %}">Users</a>
+        {% endif %}
+
+    </nav>
+</div>
+
+{% block content %}
+{% endblock %}
+
+    <footer class="pt-4 my-md-5 pt-md-5 border-top">
+        <div class="row">
+            <div class="col-12 col-md">
+                <small class="d-block mb-3 text-muted">&copy; 2023 - {% now 'Y' %}</small>
+            </div>
+        </div>
+    </footer>
+</div>
+<script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+</body>
+
+</html>

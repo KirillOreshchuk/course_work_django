@@ -1,0 +1,44 @@
+{% extends 'newsletter/base.html' %}
+
+{% load mediapath %}
+
+{% block content %}
+
+{% if request.user.is_authenticated %}
+<div class="text-center container">
+    <a class="btn btn-primary" href="{% url 'blog:blog_create' %}" type="button">Создать публикацию</a>
+</div>
+{% endif %}
+
+<div class="container mt-5">
+<div class="row row-cols-1 row-cols-md-3 g-4">
+    {% for object in post_list %}
+    <div class="col">
+        <div class="card h-100">
+            <img src="{{ object.image|mediapath }}" width="100%" height="225">
+            <div class="card-body">
+                <h5 class="card-title">{{ object.title|title }}</h5>
+                <p class="card-text">{{ object.description|truncatechars:100 }}</p>
+                <p class="card-text">Autor: {{ object.owner }}</p>
+            </div>
+            <div class="card-footer">
+                <a href="{% url 'blog:blog_detail' object.pk %}" type="button"
+                   class="btn btn-sm btn-outline-secondary">Просмотр</a>
+                {% if request.user.is_authenticated %}
+
+                {% if user == object.owner or request.user.is_staff %}
+                <a href="{% url 'blog:blog_update' object.pk %}" type="button"
+                   class="btn btn-sm btn-outline-secondary">Изменить</a>
+                <a href="{% url 'blog:blog_delete' object.pk %}" type="button"
+                   class="btn btn-sm btn-outline-secondary">Удалить</a>
+
+                {% endif %}
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,35 @@
+{% extends 'newsletter/base.html' %}
+
+{% block content %}
+
+<div class="container">
+    <div class="card col-8">
+        <div class="card-body">
+
+            <p class="card-title">created_at: {{ object.created_at }}</p>
+            <p class="card-title">start_time: {{ object.start_time }}</p>
+            <p class="card-title">end_time: {{ object.end_time }}</p>
+            <p class="card-title">next_newsletter: {{ object.next_newsletter }}</p>
+            <p class="card-title">periodicity: {{ object.periodicity }}</p>
+            <p class="card-title">status: {{ object.status }}</p>
+            <p class="card-title">message: {{ object.message.title|truncatechars:20 }}</p>
+            <p class="card-title">clients:
+                {% for object in object.clients.all %}
+                {{ object.email }},
+                {% endfor %}
+            </p>
+
+        </div>
+        <div class="card-footer">
+
+            {% if request.user.is_staff %}
+                <p class="card-text mb-3">owner: {{ object.owner }}</p>
+            {% endif %}
+                <a type="button" href="{% url 'newsletter:mailing_settings_list'%}"
+               class="btn btn-lg btn-block btn-outline-primary">Назад</a>
+
+        </div>
+    </div>
+</div>
+
+{% endblock %}

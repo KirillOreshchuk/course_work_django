@@ -1,0 +1,60 @@
+{% extends 'newsletter/base.html' %}
+
+{% load mediapath %}
+
+{% block content %}
+
+{% if not user|has_group:"Manager" %}
+<div class="text-center container">
+    <a class='btn btn-primary mb-3' href="{% url 'newsletter:message_create' %}">
+        Добавить сообщение
+    </a>
+</div>
+{% endif %}
+
+<div class="container text-center">
+    <table class="table">
+        <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Title</th>
+            <th scope="col">Message</th>
+            {% if request.user.is_staff %}
+            <th scope="col">owner</th>
+            {% endif %}
+            <th scope="col">Action</th>
+        </tr>
+        </thead>
+        <tbody>
+
+        {% for message in object_list %}
+
+        <tr>
+            <th scope="row">{{ forloop.counter }}</th>
+            <td>{{ message.title|truncatechars:25 }}</td>
+            <td>{{ message.text|truncatechars:25 }}</td>
+            {% if request.user.is_staff %}
+            <td>{{ message.owner }}</td>
+            {% endif %}
+            <td>
+
+                <div class="btn-group" role="group" aria-label="Basic outlined example">
+                    <a href="{% url 'newsletter:message_detail' message.pk %}" type="button"
+                       class="btn btn-sm btn-outline-secondary">Просмотр</a>
+                    {% if not user|has_group:"Manager" %}
+                    <a href="{% url 'newsletter:message_update' message.pk %}" type="button"
+                       class="btn btn-sm btn-outline-secondary">Изменить</a>
+                    <a href="{% url 'newsletter:message_delete' message.pk %}" type="button"
+                       class="btn btn-sm btn-outline-secondary">Удалить</a>
+                    {% endif %}
+                </div>
+            </td>
+        </tr>
+
+        {% endfor %}
+
+        </tbody>
+    </table>
+</div>
+
+{% endblock %}
